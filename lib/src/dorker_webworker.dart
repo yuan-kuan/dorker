@@ -1,5 +1,5 @@
 @JS()
-library docker_web;
+library dorker_webworker;
 
 import 'dart:html' show Worker;
 
@@ -19,12 +19,17 @@ external void PostMessage(obj);
 @JS('onmessage')
 external void set onMessage(f);
 
-@JS('onconnect')
-external void set onConnect(f);
-
-/**
- * DorkerBoss is Dart being the Web Worker
- */
+/// This is like a boss, which codes inside a Web Worker talks to.
+/// 
+/// It wraps the JS interop functions of how a Web Worker receive and send messages, and
+/// provides [Dorker] interface for them.
+/// 
+/// This class is usually used inside a Web Worker script
+/// '''
+/// main() {
+///   Service(DorkerBoss());
+/// }
+/// '''
 class DorkerBoss<T> extends Dorker<T> {
   DorkerBoss() {
     onMessage = allowInterop((event) => incoming.add(event.data));
@@ -32,9 +37,14 @@ class DorkerBoss<T> extends Dorker<T> {
   }
 }
 
-/**
- * Dart Web Worker
- */
+/// This take a Web [Worker], and wrap the communication with the Worker, then provides
+/// [Dorker] interface to whoever want to use this Worker.
+/// 
+/// ```
+/// _dorker = DorkerWorker(Worker('worker.js'));
+/// _dorker.onMessage.listen(_handle);
+/// _dorker.postMessage.add('start working');
+/// ```
 class DorkerWorker<T> extends Dorker<T> {
   Worker _worker;
   
