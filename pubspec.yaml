@@ -1,0 +1,17 @@
+name: dorker
+description: A starting point for Dart libraries or applications.
+version: 0.0.3
+# homepage: https://www.example.com
+# author: kuan <email@example.com>
+
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+
+dependencies:
+  js: ^0.6.1+1
+  meta: ^1.1.6
+
+dev_dependencies:
+  test: ^1.0.0
+  build_runner: ^1.1.2
+  build_web_compilers: ^1.0.0
