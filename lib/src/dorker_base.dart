@@ -28,4 +28,10 @@ class Dorker<T> {
     rekrod.outgoing.stream.listen(incoming.add);
     outgoing.stream.listen(rekrod.incoming.add);
   }
+
+  @mustCallSuper
+  void dispose() {
+    incoming.close();
+    outgoing.close();
+  }
 }

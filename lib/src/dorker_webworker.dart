@@ -52,4 +52,10 @@ class DorkerWorker<T> extends Dorker<T> {
     _worker.onMessage.map((event) => event.data).listen(incoming.add);
     outgoing.stream.listen(_worker.postMessage);
   }
+
+  @override
+  void dispose() {
+    _worker.terminate();
+    super.dispose();
+  }
 }
