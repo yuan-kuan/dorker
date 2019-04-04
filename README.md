@@ -67,4 +67,4 @@ void main() {
 
 Example folder provided a good guideline of how to pull this off. You can the example by running either `webdev serve` or `webdev serve -r`.
 
-To follow my personal story of how I come to this, you can check out my post here.
+To follow my personal story of how I come to this, you can check out my post [here](https://medium.com/@yuankuan/web-worker-and-dart-2-5f38ba74575c).
