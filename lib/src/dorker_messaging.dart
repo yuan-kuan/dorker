@@ -19,6 +19,8 @@ class Request {
   }
 
   List<dynamic> _toPayload() => [command, json.encode(params), trackingId];
+
+  String toString() => 'Request\nCommand: $command\nParam: $params';
 }
 
 class Respond {
@@ -50,4 +52,6 @@ class Respond {
 
   List<dynamic> _toPayload() =>
       [command, isError, json.encode(params), trackingId];
+
+  String toString() => 'Respond ${isError ? 'ERROR':''}\nCommand: $command\nParam: $params';
 }
