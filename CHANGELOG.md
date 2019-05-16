@@ -1,3 +1,8 @@
+## 0.1.2
+
+- Added TransformCompleter.
+- Resquest and Respond print out nicer.
+
 ## 0.1.1
 
 - Added messaging helper.
