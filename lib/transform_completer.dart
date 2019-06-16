@@ -11,7 +11,7 @@ class TransformCompleter<T> {
   void complete([dynamic data]) {
     try {
       _completer.complete(_transform?.call(data));
-    } catch (e){
+    } catch (e) {
       _completer.completeError(e);
     }
   }

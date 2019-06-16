@@ -14,14 +14,14 @@ class Dorker<T> {
   Sink<T> get postMessage => outgoing.sink;
 
   Dorker();
-  
+
   /// Links up 2 [Dorker] so both side can start communicating.
-  /// 
-  /// A good metaphor is like 2 people talking on the phone. 
+  ///
+  /// A good metaphor is like 2 people talking on the phone.
   /// The phone is the [Dorker]. CrossLink is like dialing up and connecting the phone.
-  /// 
+  ///
   /// This is useful to connect 2 classes that only communicate via [Dorker].
-  /// 
+  ///
   /// It is especially useful to run a Dart Web App in `webdev serve` but retain most
   /// or the logic working with Web Worker.
   Dorker.CrossLink(Dorker rekrod) {

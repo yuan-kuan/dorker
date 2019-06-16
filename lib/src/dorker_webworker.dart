@@ -17,13 +17,13 @@ abstract class MessageEvent {
 external void PostMessage(obj);
 
 @JS('onmessage')
-external void set onMessage(f);
+external set onMessage(f);
 
 /// This is like a boss, which codes inside a Web Worker talks to.
-/// 
+///
 /// It wraps the JS interop functions of how a Web Worker receive and send messages, and
 /// provides [Dorker] interface for them.
-/// 
+///
 /// This class is usually used inside a Web Worker script
 /// '''
 /// main() {
@@ -39,7 +39,7 @@ class DorkerBoss<T> extends Dorker<T> {
 
 /// This take a Web [Worker], and wrap the communication with the Worker, then provides
 /// [Dorker] interface to whoever want to use this Worker.
-/// 
+///
 /// ```
 /// _dorker = DorkerWorker(Worker('worker.js'));
 /// _dorker.onMessage.listen(_handle);
@@ -47,7 +47,7 @@ class DorkerBoss<T> extends Dorker<T> {
 /// ```
 class DorkerWorker<T> extends Dorker<T> {
   Worker _worker;
-  
+
   DorkerWorker(this._worker) {
     _worker.onMessage.map((event) => event.data).listen(incoming.add);
     outgoing.stream.listen(_worker.postMessage);

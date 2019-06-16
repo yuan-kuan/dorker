@@ -53,5 +53,6 @@ class Respond {
   List<dynamic> _toPayload() =>
       [command, isError, json.encode(params), trackingId];
 
-  String toString() => 'Respond ${isError ? 'ERROR':''}\nCommand: $command\nParam: $params';
+  String toString() =>
+      'Respond ${isError ? 'ERROR' : ''}\nCommand: $command\nParam: $params';
 }
