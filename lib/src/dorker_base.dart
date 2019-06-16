@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 /// a [Stream] to listen to, and a [Sink] to pass message.
 class Dorker<T> {
   @protected
-  final incoming = StreamController<T>();
+  final incoming = StreamController<T>.broadcast();
   @protected
   final outgoing = StreamController<T>();
 
@@ -33,5 +33,9 @@ class Dorker<T> {
   void dispose() {
     incoming.close();
     outgoing.close();
+  }
+
+  bool isActive() {
+    return !outgoing.isClosed && !outgoing.isPaused;
   }
 }

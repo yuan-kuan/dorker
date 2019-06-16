@@ -1,3 +1,8 @@
+## 0.1.3
+
+- Make incoming a broadcast Stream.
+- Expose funciton to check for an active Stream.
+
 ## 0.1.2
 
 - Added TransformCompleter.
