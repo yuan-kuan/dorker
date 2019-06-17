@@ -1,6 +1,6 @@
 name: dorker
 description: A wrapper for Web Worker, one that allow you to have the worker's code in the same project.
-version: 0.1.2
+version: 0.1.4
 homepage: https://github.com/yuan-kuan/dorker
 author: kuan <yuankuan@gmail.com>
 

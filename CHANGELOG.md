@@ -1,3 +1,7 @@
+## 0.1.4
+
+- Downgraded SDK version to support Flutter Web.
+
 ## 0.1.3
 
 - Make incoming a broadcast Stream.
