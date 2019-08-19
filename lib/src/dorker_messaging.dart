@@ -20,30 +20,46 @@ class Request {
 
   List<dynamic> _toPayload() => [command, json.encode(params), trackingId];
 
-  String toString() => 'Request\nCommand: $command\nParam: $params';
+  String toString() =>
+      'Request\nCommand: $command\nParam: $params\nTracking: $trackingId';
 }
 
 class Respond {
   final String command;
   final bool isError;
+  final bool isEvent;
   final dynamic params;
   final String trackingId;
 
-  Respond(this.command, this.isError, {this.params, this.trackingId});
+  Respond(this.command,
+      {this.isError, this.isEvent, this.params, this.trackingId});
 
   factory Respond.to(Request request, {dynamic params}) {
-    return Respond(request.command, false,
-        params: params, trackingId: request.trackingId);
+    return Respond(request.command,
+        isError: false,
+        isEvent: false,
+        params: params,
+        trackingId: request.trackingId);
   }
 
   factory Respond.error(Request request, {dynamic params}) {
-    return Respond(request.command, true,
-        params: params, trackingId: request.trackingId);
+    return Respond(request.command,
+        isError: true,
+        isEvent: false,
+        params: params,
+        trackingId: request.trackingId);
+  }
+
+  factory Respond.sendEvent(dynamic params) {
+    return Respond(null, isError: false, isEvent: true, params: params);
   }
 
   factory Respond.fromPayload(List<dynamic> payload) {
-    return Respond(payload[0], payload[1],
-        params: json.decode(payload[2]), trackingId: payload[3]);
+    return Respond(payload[0],
+        isError: payload[1],
+        isEvent: payload[2],
+        params: json.decode(payload[3]),
+        trackingId: payload[4]);
   }
 
   void sendThrough(Dorker dorker) {
@@ -51,7 +67,7 @@ class Respond {
   }
 
   List<dynamic> _toPayload() =>
-      [command, isError, json.encode(params), trackingId];
+      [command, isError, isEvent, json.encode(params), trackingId];
 
   String toString() =>
       'Respond ${isError ? 'ERROR' : ''}\nCommand: $command\nParam: $params';

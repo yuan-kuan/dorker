@@ -1,3 +1,7 @@
+## 0.1.5
+
+- Introduce a new isEvent flag for Respond.
+
 ## 0.1.4
 
 - Downgraded SDK version to support Flutter Web.
