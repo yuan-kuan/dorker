@@ -8,7 +8,7 @@ class Dorker<T> {
   @protected
   final incoming = StreamController<T>.broadcast();
   @protected
-  final outgoing = StreamController<T>();
+  final outgoing = StreamController<T>.broadcast();
 
   Stream<T> get onMessage => incoming.stream;
   Sink<T> get postMessage => outgoing.sink;

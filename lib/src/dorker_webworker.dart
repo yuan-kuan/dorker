@@ -1,7 +1,7 @@
 @JS()
 library dorker_webworker;
 
-import 'dart:html' show Worker;
+import 'dart:html' show Worker, SharedWorker;
 
 import 'package:js/js.dart';
 
@@ -11,6 +11,14 @@ import 'dorker_base.dart';
 @JS()
 abstract class MessageEvent {
   external dynamic get data;
+  external dynamic get ports;
+}
+
+@anonymous
+@JS()
+abstract class MessagePort {
+  external void postMessage(obj);
+  external set onmessage(f);
 }
 
 @JS('postMessage')
@@ -18,6 +26,12 @@ external void PostMessage(obj);
 
 @JS('onmessage')
 external set onMessage(f);
+
+@JS('onconnect')
+external set onConnect(f);
+
+@JS('close')
+external void close();
 
 /// This is like a boss, which codes inside a Web Worker talks to.
 ///
@@ -34,6 +48,28 @@ class DorkerBoss<T> extends Dorker<T> {
   DorkerBoss() {
     onMessage = allowInterop((event) => incoming.add(event.data));
     outgoing.stream.listen(PostMessage);
+  }
+}
+
+class DorkerSharedBoss<T> extends Dorker<T> {
+  DorkerSharedBoss() {
+    onConnect = allowInterop((event) {
+      final MessagePort port = event.ports[0];
+
+      port.onmessage = allowInterop((event) {
+        incoming.add(event.data);
+      });
+
+      outgoing.stream.listen((event) {
+        port.postMessage(event);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    close();
+    super.dispose();
   }
 }
 
@@ -56,6 +92,21 @@ class DorkerWorker<T> extends Dorker<T> {
   @override
   void dispose() {
     _worker.terminate();
+    super.dispose();
+  }
+}
+
+class DorkerSharedWorker<T> extends Dorker<T> {
+  SharedWorker _worker;
+
+  DorkerSharedWorker(this._worker) {
+    _worker.port.onMessage.map((event) => event.data).listen(incoming.add);
+    outgoing.stream.listen(_worker.port.postMessage);
+  }
+
+  @override
+  void dispose() {
+    _worker.port.close();
     super.dispose();
   }
 }
