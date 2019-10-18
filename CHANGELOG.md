@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Introduce the usage of SharedWorker
+
 ## 0.1.5
 
 - Introduce a new isEvent flag for Respond.
@@ -9,12 +13,12 @@
 ## 0.1.3
 
 - Make incoming a broadcast Stream.
-- Expose funciton to check for an active Stream.
+- Expose function to check for an active Stream.
 
 ## 0.1.2
 
 - Added TransformCompleter.
-- Resquest and Respond print out nicer.
+- Request and Respond print out nicer.
 
 ## 0.1.1
 
