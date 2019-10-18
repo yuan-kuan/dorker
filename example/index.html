@@ -13,9 +13,15 @@
   </head>
 
   <body>
-    <input type="text" id="input" />
-    <button type="button" id="btConcat">Concat</button>
+    <div class="action">
+      <input type="text" id="input" />
+      <button type="button" id="btConcat">Worker Concat</button>
+      <button type="button" id="btSharedConcat">SharedWorker Concat</button>
+    </div>
 
-    <div id="output"></div>
+    <div class="output" id="output"></div>
+
+    <h3>You should spawn new tab to see the magic with SharedWorker</h3>
+    <div class="output" id="sharedOutput"></div>
   </body>
 </html>
