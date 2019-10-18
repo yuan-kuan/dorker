@@ -51,6 +51,7 @@ class DorkerBoss<T> extends Dorker<T> {
   }
 }
 
+/// Similar to [DorkerBoss] but this used inside a Shared Worker.
 class DorkerSharedBoss<T> extends Dorker<T> {
   DorkerSharedBoss() {
     onConnect = allowInterop((event) {
@@ -75,6 +76,7 @@ class DorkerSharedBoss<T> extends Dorker<T> {
 
 /// This take a Web [Worker], and wrap the communication with the Worker, then provides
 /// [Dorker] interface to whoever want to use this Worker.
+/// This pair with [DorkerBoss]
 ///
 /// ```
 /// _dorker = DorkerWorker(Worker('worker.js'));
@@ -96,6 +98,9 @@ class DorkerWorker<T> extends Dorker<T> {
   }
 }
 
+/// Identical to [DorkerWorker] but tasks a [SharedWorker] instead.
+/// This has to pair with [DorkerSharedBoss].
+//TODO: We cannot spawn SharedWorker inside a Worker/SharedWorker context. We need a way to pass in the port.
 class DorkerSharedWorker<T> extends Dorker<T> {
   SharedWorker _worker;
 
