@@ -72,6 +72,8 @@ Example folder provided a good guideline of how to pull this off. You can the ex
 
 For all the example listed above, you can safely replace [DorkerWorker] with [DorkerSharedWorker], then [Worker] with [SharedWorker] and [DorkerBoss] with [DorkerSharedBoss].
 
+**Warning: SharedWorker will not work as intended in multiple tab for `dcc` built, aka `webdev serve`.**
+
 Just make sure you know why are you using Worker or SharedWorker, study them here: https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API.
 
 ---

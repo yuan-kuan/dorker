@@ -100,6 +100,9 @@ class DorkerWorker<T> extends Dorker<T> {
 
 /// Identical to [DorkerWorker] but tasks a [SharedWorker] instead.
 /// This has to pair with [DorkerSharedBoss].
+///
+/// WARNING: SharedWorker does not work as intended in `dcc` built.
+/// Nothing can live "out of the tab".
 //TODO: We cannot spawn SharedWorker inside a Worker/SharedWorker context. We need a way to pass in the port.
 class DorkerSharedWorker<T> extends Dorker<T> {
   SharedWorker _worker;

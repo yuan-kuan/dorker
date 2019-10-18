@@ -13,9 +13,12 @@ void main() {
     _concatSharedDorker = DorkerSharedWorker(
         SharedWorker('worker/concater_sharedworker.dart.js'));
   } else {
-    print('Not using worker');
+    print(
+        'Not using worker. Share worker across multiple Tab will not work as intended');
     _concatDorker = Dorker();
+    _concatSharedDorker = Dorker();
     Concater(Dorker.CrossLink(_concatDorker));
+    Concater(Dorker.CrossLink(_concatSharedDorker));
   }
 
   var input = querySelector('#input') as TextInputElement;
