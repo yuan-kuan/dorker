@@ -23,7 +23,7 @@ class Dorker<T> {
   /// This is useful to connect 2 classes that only communicate via [Dorker].
   ///
   /// It is especially useful to run a Dart Web App in `webdev serve` but retain most
-  /// or the logic working with Web Worker.
+  /// of the logic working with Web Worker.
   Dorker.CrossLink(Dorker rekrod) {
     crossLink(rekrod);
   }

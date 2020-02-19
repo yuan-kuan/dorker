@@ -98,7 +98,7 @@ class DorkerWorker<T> extends Dorker<T> {
   }
 }
 
-/// Identical to [DorkerWorker] but tasks a [SharedWorker] instead.
+/// Identical to [DorkerWorker] but use a [SharedWorker] instead.
 /// This has to pair with [DorkerSharedBoss].
 ///
 /// WARNING: SharedWorker does not work as intended in `dcc` built.
