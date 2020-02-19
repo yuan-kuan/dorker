@@ -1,22 +1,22 @@
 @JS()
 library dorker_webworker;
 
-import 'dart:html' show Worker, SharedWorker;
+import 'dart:html' show MessagePort, SharedWorker, Worker;
 
 import 'package:js/js.dart';
 
 import 'dorker_base.dart';
 
 @anonymous
-@JS()
-abstract class MessageEvent {
+@JS('MessageEvent')
+abstract class DorkerMessageEvent {
   external dynamic get data;
   external dynamic get ports;
 }
 
 @anonymous
-@JS()
-abstract class MessagePort {
+@JS('MessagePort')
+abstract class DorkerMessagePort {
   external void postMessage(obj);
   external set onmessage(f);
 }
@@ -55,15 +55,33 @@ class DorkerBoss<T> extends Dorker<T> {
 class DorkerSharedBoss<T> extends Dorker<T> {
   DorkerSharedBoss() {
     onConnect = allowInterop((event) {
-      final MessagePort port = event.ports[0];
+      /// There was a bug resulted in dart2js generated js which change the type of this `event`
+      ///
+      /// If we used code that required a `Event` in our dart code,
+      /// dart2js will go on generate a bunch of `MessageEvent` related native:dart conversion.
+      /// When this happen, we need to use the `dart:html` version of `MessageEvent`
+      ///
+      /// Otherwise, if our dart code didn't use any `Event` related code,
+      /// there will no replacement for `MessageEvent`, then we will need the interop version.
+      if (event is DorkerMessageEvent) {
+        final DorkerMessagePort port = event.ports[0];
+        port.onmessage = allowInterop((event) {
+          incoming.add(event.data);
+        });
 
-      port.onmessage = allowInterop((event) {
-        incoming.add(event.data);
-      });
+        outgoing.stream.listen((event) {
+          port.postMessage(event);
+        });
+      } else {
+        final MessagePort port = event.ports[0];
+        port.onMessage.listen((event) {
+          incoming.add(event.data);
+        });
 
-      outgoing.stream.listen((event) {
-        port.postMessage(event);
-      });
+        outgoing.stream.listen((event) {
+          port.postMessage(event);
+        });
+      }
     });
   }
 
